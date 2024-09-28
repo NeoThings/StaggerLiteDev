@@ -133,10 +133,14 @@ void VoxelLayer::updateBounds(double robot_x, double robot_y, double robot_yaw, 
   current_ = current;
 
   // raytrace freespace
-  for (unsigned int i = 0; i < clearing_observations.size(); ++i)
-  {
-    raytraceFreespace(clearing_observations[i], min_x, min_y, max_x, max_y);
-  }
+  // for (unsigned int i = 0; i < clearing_observations.size(); ++i)
+  // {
+  //   raytraceFreespace(clearing_observations[i], min_x, min_y, max_x, max_y);
+  // }
+
+  //Just delete all the previous obs
+  Costmap2D::resetMaps();
+  voxel_grid_.reset();
 
   // place the new obstacles into a priority queue... each with a priority of zero to begin with
   for (std::vector<Observation>::const_iterator it = observations.begin(); it != observations.end(); ++it)

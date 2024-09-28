@@ -101,7 +101,7 @@ namespace estimation
     timer_ = nh_private.createTimer(ros::Duration(1.0/max(freq,1.0)), &OdomEstimationNode::spin, this);
 
     // advertise our estimation
-    pose_pub_ = nh_private.advertise<geometry_msgs::PoseWithCovarianceStamped>("odom_combined", 10);
+    pose_pub_ = nh_private.advertise<geometry_msgs::PoseWithCovarianceStamped>("odom", 10);
 
     // initialize
     filter_stamp_ = Time::now();
@@ -109,7 +109,7 @@ namespace estimation
     // subscribe to odom messages
     if (odom_used_){
       ROS_DEBUG("Odom sensor can be used");
-      odom_sub_ = nh.subscribe("odom", 10, &OdomEstimationNode::odomCallback, this);
+      odom_sub_ = nh.subscribe("odom_raw", 10, &OdomEstimationNode::odomCallback, this);
     }
     else ROS_DEBUG("Odom sensor will NOT be used");
 
