@@ -1,0 +1,23 @@
+<launch>
+	<arg name="model" />
+	<!-- Parsing xacro and setting robot_description parameter -->
+	<!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find staggerlite_description)/urdf/staggerlite_urdf.xacro" /> -->
+	<!-- noetic 中/opt/ros/noetic/lib/xacro/xacro.py文件不存在了，所以去掉.py-->
+	<param name="robot_description" command="$(find xacro)/xacro $(find staggerlite_description)/urdf/staggerlite_urdf.xacro" />
+	<!-- <param name="robot_description" textfile="$(find staggerlite_description)/urdf/staggerlite.urdf" /> -->
+	<!-- Setting gui parameter to true for display joint slider -->
+	<param name="use_gui" value="true"/>
+	<!-- Starting Joint state publisher node which will publish the joint values -->
+	<!-- 从参数服务器读取robot_description，并通过sensor_msg/JointState发布-->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<!-- Starting robot state publish which will publish tf -->
+	<!-- 使用robot_description定义的URDF和sensor_msg/JointState计算并发布tf-->
+	<!--state_publisher was a deprecated in noetic，use robot_state_publisher instead -->
+	<!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	<!-- Launch visualization in rviz -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find staggerlite_description)/rviz/staggerlite_urdf.rviz" required="true" />
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="my_static_transform_publisher" args="0 0 0 0 0 0 /map /base_link 100" /> -->
+
+</launch>

@@ -1,0 +1,54 @@
+<launch>
+
+  <param name="/use_sim_time" value="true"/>
+  <arg name="scan_topic"      default="scan"/>
+
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="roll" default="0"/>
+  <arg name="pitch" default="0"/>
+  <arg name="yaw" default="0"/>
+
+  <include file="$(find staggerlite_gazebo)/launch/staggerlite_gazebo.launch"/>
+
+  <include file="$(find robot_pose_ekf)/robot_pose_ekf.launch"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" 
+        args="$(find staggerlite_gazebo)/maps/HSH.yaml" output="screen">
+        <param name="frame_id" value="map"/>
+  </node>
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find staggerlite_bringup)/params/amcl_params.yaml" command="load" />
+        <param name="scan"                      value="$(arg scan_topic)"/>
+        <param name="initial_pose_x"            value="$(arg x_pos)"/>
+        <param name="initial_pose_y"            value="$(arg y_pos)"/>
+        <param name="initial_pose_a"            value="$(arg yaw)"/>
+  </node>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+ 	    <!-- MoveBase -->
+        <param name="controller_frequency" value="10.0" />
+        <param name="controller_patience" value="15.0" />
+
+  	    <!-- Costmap -->
+        <rosparam file="$(find staggerlite_bringup)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find staggerlite_bringup)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find staggerlite_bringup)/params/global_costmap_params.yaml" command="load" />        
+        <rosparam file="$(find staggerlite_bringup)/params/local_costmap_params.yaml" command="load" />
+
+	    <!-- Global Planner -->
+        <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+        <param name="planner_frequency" value="1.0" />
+        <param name="planner_patience" value="5.0" />
+        <rosparam file="$(find staggerlite_bringup)/params/global_planner_params.yaml" command="load" />
+
+        <!-- Local Planner -->
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find staggerlite_bringup)/params/dwa_local_planner_params.yaml" command="load" />
+    </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find staggerlite_bringup)/rviz/sim_start.rviz"/>
+
+</launch>
