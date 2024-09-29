@@ -15,7 +15,7 @@
   <include file="$(find robot_pose_ekf)/robot_pose_ekf.launch"/>
 
   <node name="map_server" pkg="map_server" type="map_server" 
-        args="$(find staggerlite_gazebo)/maps/HSH.yaml" output="screen">
+        args="$(find staggerlite_gazebo)/maps/DOJO.yaml" output="screen">
         <param name="frame_id" value="map"/>
   </node>
 

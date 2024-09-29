@@ -1,0 +1,22 @@
+  <launch>
+
+  <arg name="scan_topic"      default="scan"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="roll" default="0"/>
+  <arg name="pitch" default="0"/>
+  <arg name="yaw" default="0"/>
+  
+  <include file="$(find staggerlite_description)/launch/staggerlite_description.launch"/>
+
+  <include file="$(find staggerlite_core)/launch/staggerlite_core.launch"/>
+
+  <include file="$(find fdilink_ahrs)/launch/imu.launch"/>
+
+  <include file="$(find bluesea2)/launch/lidar.launch"/>
+
+  <include file="$(find robot_pose_ekf)/robot_pose_ekf.launch"/>
+
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find staggerlite_bringup)/rviz/sim_start.rviz"/> -->
+  </launch>

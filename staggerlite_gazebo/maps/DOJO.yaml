@@ -1,6 +1,6 @@
-image: HSH.pgm
+image: DOJO.pgm
 resolution: 0.050000
-origin: [-19.049329, -6.501490, 0.000000]
+origin: [-16.076128, -14.284622, 0.000000]
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196

@@ -11,7 +11,7 @@
   <arg name="yaw" default="0"/>
 
   <!-- these are the arguments you can pass this launch file, for example paused:=true -->
-  <arg name="world_name" default="$(find staggerlite_gazebo)/worlds/HSH.world"/>
+  <arg name="world_name" default="$(find staggerlite_gazebo)/worlds/DOJO.world"/>
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
@@ -44,12 +44,12 @@
   <!-- <node name="cartographer_node" pkg="cartographer_ros"
   </node-->
 
+  <include file="$(find robot_pose_ekf)/robot_pose_ekf.launch"/>
+
   <include file="$(find staggerlite_mapping)/launch/carto_mapping.launch"> 
 
   </include>
 
-  <!-- <node name="rviz" pkg="rviz" type="rviz" required="true"
-      args="-d $(find staggerlite_mapping)/rviz/mapping.rviz" /> -->
-  <node name="rviz" pkg="rviz" type="rviz" required="true" />
+  <!-- <node name="rviz" pkg="rviz" type="rviz" required="true" /> -->
 
 </launch>
