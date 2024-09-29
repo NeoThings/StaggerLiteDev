@@ -50,6 +50,9 @@
 
   </include>
 
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find staggerlite_mapping)/rviz/mapping.rviz" />
+
   <!-- <node name="rviz" pkg="rviz" type="rviz" required="true" /> -->
 
 </launch>

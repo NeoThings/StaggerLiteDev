@@ -2,6 +2,7 @@
   <node pkg="staggerlite_core" name="staggerlite_core" type="staggerlite_core" output="screen" >
 
     <param name="chassis_port"  value="/dev/port_chassis"/>
+    <remap from="odom" to="odom_raw"/>
 
   </node>
 
